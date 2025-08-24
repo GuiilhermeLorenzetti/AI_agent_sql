@@ -1,0 +1,98 @@
+{
+    "tables": [
+      {
+        "table_name": "sales",
+        "description": "Tabela de vendas realizadas pela empresa.",
+        "columns": [
+          {
+            "name": "sale_id",
+            "type": "INTEGER",
+            "description": "Identificador único da venda (chave primária)."
+          },
+          {
+            "name": "sale_date",
+            "type": "DATE",
+            "description": "Data da venda."
+          },
+          {
+            "name": "customer_id",
+            "type": "INTEGER",
+            "description": "Identificador do cliente que realizou a compra."
+          },
+          {
+            "name": "product_id",
+            "type": "INTEGER",
+            "description": "Identificador do produto vendido."
+          },
+          {
+            "name": "quantity",
+            "type": "INTEGER",
+            "description": "Quantidade de itens vendidos."
+          },
+          {
+            "name": "unit_price",
+            "type": "DECIMAL(10,2)",
+            "description": "Preço unitário do produto no momento da venda."
+          },
+          {
+            "name": "total_amount",
+            "type": "DECIMAL(10,2)",
+            "description": "Valor total da venda (quantity * unit_price)."
+          },
+          {
+            "name": "region",
+            "type": "VARCHAR(50)",
+            "description": "Região onde a venda foi realizada."
+          }
+        ]
+      },
+      {
+        "table_name": "customers",
+        "description": "Tabela com informações dos clientes.",
+        "columns": [
+          {
+            "name": "customer_id",
+            "type": "INTEGER",
+            "description": "Identificador único do cliente (chave primária)."
+          },
+          {
+            "name": "customer_name",
+            "type": "VARCHAR(100)",
+            "description": "Nome completo do cliente."
+          },
+          {
+            "name": "customer_email",
+            "type": "VARCHAR(100)",
+            "description": "Email do cliente."
+          },
+          {
+            "name": "customer_city",
+            "type": "VARCHAR(100)",
+            "description": "Cidade do cliente."
+          }
+        ]
+      },
+      {
+        "table_name": "products",
+        "description": "Tabela com informações dos produtos.",
+        "columns": [
+          {
+            "name": "product_id",
+            "type": "INTEGER",
+            "description": "Identificador único do produto (chave primária)."
+          },
+          {
+            "name": "product_name",
+            "type": "VARCHAR(100)",
+            "description": "Nome do produto."
+          },
+          {
+            "name": "category",
+            "type": "VARCHAR(50)",
+            "description": "Categoria do produto."
+          }
+        ]
+      }
+    ]
+  }
+  
