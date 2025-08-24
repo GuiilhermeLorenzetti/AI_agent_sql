@@ -16,10 +16,10 @@ Um agente de IA que:
 ### Exemplo Prático
 Em vez de escrever:
 ```sql
-SELECT c.customer_name, SUM(s.total_amount) as total_compras
+SELECT c.customer_id, SUM(s.total_amount) as total_compras
 FROM customers c
 JOIN sales s ON c.customer_id = s.customer_id
-GROUP BY c.customer_id, c.customer_name
+GROUP BY c.customer_id
 ORDER BY total_compras ASC
 LIMIT 1;
 ```
