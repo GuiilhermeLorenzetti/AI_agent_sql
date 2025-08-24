@@ -2,7 +2,7 @@
 
 ## Visão do Projeto
 
-Este projeto representa a **ideia inicial de um agente de IA** que revoluciona a forma como interagimos com bancos de dados. O objetivo é criar um sistema que traduza perguntas em linguagem natural em consultas SQL.
+Este projeto representa a **ideia inicial de um agente de IA** que muda a forma como interagimos com bancos de dados. O objetivo é criar um sistema que traduza perguntas em linguagem natural em consultas SQL.
 
 ## Conceito Central
 
