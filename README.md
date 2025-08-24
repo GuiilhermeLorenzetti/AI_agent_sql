@@ -21,7 +21,6 @@ FROM customers c
 JOIN sales s ON c.customer_id = s.customer_id
 GROUP BY c.customer_id
 ORDER BY total_compras ASC
-LIMIT 1;
 ```
 
 O usuário simplesmente pergunta: **"Qual o cliente que menos comprou?"**
