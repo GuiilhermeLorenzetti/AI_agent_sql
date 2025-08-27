@@ -2,16 +2,9 @@
 
 ## Visão do Projeto
 
-Este projeto representa a **ideia inicial de um agente de IA** que revoluciona a forma como interagimos com bancos de dados. O objetivo é criar um sistema que traduza perguntas em linguagem natural em consultas SQL.
+Este projeto implementa um **agente de IA inteligente** que traduz perguntas em linguagem natural em consultas SQL usando um sistema multi-agente baseado em LangGraph. O sistema gera e valida consultas SQL automaticamente.
 
-## Conceito Central
-
-### O que é?
-Um agente de IA que:
-- **Lê a documentação das tabelas** 
-- **Gera scripts SQL** automaticamente baseados em perguntas em linguagem natural
-- **Entende o contexto** e estrutura do banco de dados
-- **Produz consultas otimizadas** sem necessidade de conhecimento técnico profundo
+## 🚀 Funcionalidades Implementadas
 
 ### Exemplo Prático
 Em vez de escrever:
@@ -22,9 +15,42 @@ JOIN sales s ON c.customer_id = s.customer_id
 GROUP BY c.customer_id, c.customer_name
 ORDER BY total_compras ASC
 LIMIT 1;
-```
 
 O usuário simplesmente pergunta: **"Qual o cliente que menos comprou?"**
+
+### O que é?
+Um agente de IA que:
+- **Lê a documentação das tabelas** 
+- **Gera scripts SQL** automaticamente baseados em perguntas em linguagem natural
+- **Entende o contexto** e estrutura do banco de dados
+- **Produz consultas otimizadas** sem necessidade de conhecimento técnico profundo
+
+### ✅ **Interface Interativa**
+- **Input Dinâmico**: O usuário digita perguntas em tempo real
+- **Output Limpo**: Exibe apenas o SQL final gerado
+- **Validação Automática**: Garante que apenas SQL válido seja retornado
+
+### ✅ **Documentação de Schema**
+- **JSON Estruturado**: Schema das tabelas em formato legível
+- **Validação de Tabelas**: Verifica existência de colunas e tabelas
+- **Prevenção de Comandos Perigosos**: Bloqueia DROP, CREATE, DELETE, etc.
+
+## 🏗️ Arquitetura Atual
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Input         │    │   Agente        │    │   Validação     │
+│   Usuário       │───▶│   Gerador       │───▶│   SQL           │
+│   (Pergunta)    │    │   (Groq API)    │    │   (Groq API)    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                │                       │
+                                ▼                       ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Output        │    │   Decisão       │    │   Loop          │
+│   (SQL Final)   │◀───│   Continuar?    │◀───│   Regenerar     │
+│                 │    │   (LangGraph)   │    │   se Inválido   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+```
 
 ## 🔮 Roadmap e Evolução
 
@@ -46,63 +72,11 @@ O usuário simplesmente pergunta: **"Qual o cliente que menos comprou?"**
 - Retorna resultados formatados
 - Trata erros e otimiza queries quando necessário
 
-#### 👥 **Sistema Multi-Agente**
-- **Agente Principal**: Gera as consultas iniciais
-- **Agente Validador**: Revisa a sintaxe e lógica das queries
-- **Agente Otimizador**: Melhora performance das consultas
-- **Agente Analista**: Interpreta e explica os resultados
-
-#### 🧠 **Aprendizado Contínuo**
-- Aprende com consultas anteriores
-- Adapta-se ao padrão de uso do usuário
-- Melhora a precisão baseada no feedback
-
-## 🎨 Arquitetura Visionária
-
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Interface     │    │   Agente        │    │   Banco de      │
-│   Natural       │───▶│   Principal     │───▶│   Dados         │
-│   Language      │    │                 │    │                 │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-                                │
-                                ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Agente        │    │   Agente        │    │   Agente        │
-│   Validador     │◀───│   Otimizador    │───▶│   Analista      │
-│                 │    │                 │    │                 │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-```
-
-## 💡 Casos de Uso
-
-### Para Analistas de Dados
-- Consultas complexas sem escrever SQL
-- Exploração rápida de dados
-- Relatórios automáticos
-
-### Para Desenvolvedores
-- Prototipagem rápida de queries
-- Validação de lógica de negócio
-- Documentação automática de consultas
-
-### Para Stakeholders
-- Acesso direto aos dados sem intermediários
-- Perguntas em linguagem natural
-- Insights imediatos
-
-## 🛠️ Tecnologias Atuais
-
-- **Python**: Linguagem principal
-- **Groq API**: Modelo de linguagem para geração de SQL
-- **JSON**: Documentação de schema das tabelas
-- **Environment Variables**: Configuração segura
-
 ## 🌟 Impacto Esperado
 
 Este projeto tem o potencial de:
 - **Democratizar o acesso a dados** para não-técnicos
-- **Acelerar análises** de 80% do tempo atual
+- **Acelerar análises** 
 - **Reduzir erros** em consultas SQL
 - **Padronizar** a forma de interagir com bancos de dados
 - **Criar uma ponte** entre linguagem natural e dados estruturados
