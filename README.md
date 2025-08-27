@@ -2,19 +2,27 @@
 
 ## Visão do Projeto
 
-Este projeto implementa um **agente de IA inteligente** que traduz perguntas em linguagem natural em consultas SQL usando um sistema multi-agente baseado em LangGraph. O sistema gera e valida consultas SQL automaticamente.
+Este projeto representa a **ideia inicial de um agente de IA** que revoluciona a forma como interagimos com bancos de dados. O objetivo é criar um sistema que traduza perguntas em linguagem natural em consultas SQL.
 
-## 🚀 Funcionalidades Implementadas
+## Conceito Central
+
+### O que é?
+Um agente de IA que:
+- **Lê a documentação das tabelas** 
+- **Gera scripts SQL** automaticamente baseados em perguntas em linguagem natural
+- **Entende o contexto** e estrutura do banco de dados
+- **Produz consultas otimizadas** sem necessidade de conhecimento técnico profundo
 
 ### Exemplo Prático
 Em vez de escrever:
 ```sql
-SELECT c.customer_name, SUM(s.total_amount) as total_compras
+SELECT c.customer_id, SUM(s.total_amount) as total_compras
 FROM customers c
 JOIN sales s ON c.customer_id = s.customer_id
-GROUP BY c.customer_id, c.customer_name
+GROUP BY c.customer_id
 ORDER BY total_compras ASC
 LIMIT 1;
+```
 
 O usuário simplesmente pergunta: **"Qual o cliente que menos comprou?"**
 
