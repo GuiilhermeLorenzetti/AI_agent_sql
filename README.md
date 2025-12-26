@@ -1,90 +1,90 @@
 # AI Agent SQL Generator
 
-## Visão do Projeto
+## Project Vision
 
-Este projeto representa a **ideia inicial de um agente de IA** que revoluciona a forma como interagimos com bancos de dados. O objetivo é criar um sistema que traduza perguntas em linguagem natural em consultas SQL.
+This project represents the **initial idea of an AI agent** that revolutionizes how we interact with databases. The goal is to create a system that translates natural language questions into SQL queries.
 
-## Conceito Central
+## Core Concept
 
-### O que é?
-Um agente de IA que:
-- **Lê a documentação das tabelas** 
-- **Gera scripts SQL** automaticamente baseados em perguntas em linguagem natural
-- **Entende o contexto** e estrutura do banco de dados
-- **Produz consultas otimizadas** sem necessidade de conhecimento técnico profundo
+### What is it?
+An AI agent that:
+- **Reads table documentation**
+- **Generates SQL scripts** automatically based on natural language questions
+- **Understands the context** and structure of the database
+- **Produces optimized queries** without the need for deep technical knowledge
 
-### Exemplo Prático
-Em vez de escrever:
+### Practical Example
+Instead of writing:
 ```sql
-SELECT c.customer_id, SUM(s.total_amount) as total_compras
+SELECT c.customer_id, SUM(s.total_amount) as total_purchases
 FROM customers c
 JOIN sales s ON c.customer_id = s.customer_id
 GROUP BY c.customer_id
-ORDER BY total_compras ASC
+ORDER BY total_purchases ASC
 LIMIT 1;
 ```
 
-O usuário simplesmente pergunta: **"Qual o cliente que menos comprou?"**
+The user simply asks: **"Which customer bought the least?"**
 
-### O que é?
-Um agente de IA que:
-- **Lê a documentação das tabelas** 
-- **Gera scripts SQL** automaticamente baseados em perguntas em linguagem natural
-- **Entende o contexto** e estrutura do banco de dados
-- **Produz consultas otimizadas** sem necessidade de conhecimento técnico profundo
+### What is it?
+An AI agent that:
+- **Reads table documentation**
+- **Generates SQL scripts** automatically based on natural language questions
+- **Understands the context** and structure of the database
+- **Produces optimized queries** without the need for deep technical knowledge
 
-### ✅ **Interface Interativa**
-- **Input Dinâmico**: O usuário digita perguntas em tempo real
-- **Output Limpo**: Exibe apenas o SQL final gerado
-- **Validação Automática**: Garante que apenas SQL válido seja retornado
+### ✅ **Interactive Interface**
+- **Dynamic Input**: User types questions in real-time
+- **Clean Output**: Displays only the final generated SQL
+- **Automatic Validation**: Ensures only valid SQL is returned
 
-### ✅ **Documentação de Schema**
-- **JSON Estruturado**: Schema das tabelas em formato legível
-- **Validação de Tabelas**: Verifica existência de colunas e tabelas
-- **Prevenção de Comandos Perigosos**: Bloqueia DROP, CREATE, DELETE, etc.
+### ✅ **Schema Documentation**
+- **Structured JSON**: Table schema in readable format
+- **Table Validation**: Verifies existence of columns and tables
+- **Dangerous Command Prevention**: Blocks DROP, CREATE, DELETE, etc.
 
-## 🏗️ Arquitetura Atual
+## 🏗️ Current Architecture
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Input         │    │   Agente        │    │   Validação     │
-│   Usuário       │───▶│   Gerador       │───▶│   SQL           │
-│   (Pergunta)    │    │   (Groq API)    │    │   (Groq API)    │
+│   Input         │    │   Agent         │    │   Validation    │
+│   User          │───▶│   Generator     │───▶│   SQL           │
+│   (Question)    │    │   (Groq API)    │    │   (Groq API)    │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
                                 │                       │
                                 ▼                       ▼
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Output        │    │   Decisão       │    │   Loop          │
-│   (SQL Final)   │◀───│   Continuar?    │◀───│   Regenerar     │
-│                 │    │   (LangGraph)   │    │   se Inválido   │
+│   Output        │    │   Decision      │    │   Loop          │
+│   (Final SQL)   │◀───│   Continue?     │◀───│   Regenerate    │
+│                 │    │   (LangGraph)   │    │   if Invalid    │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
-## 🔮 Roadmap e Evolução
+## 🔮 Roadmap and Evolution
 
-### Fase Atual (MVP)
-- ✅ Leitura de documentação de tabelas via JSON
-- ✅ Geração de SQL via API Groq
-- ✅ Processamento de perguntas em linguagem natural
+### Current Phase (MVP)
+- ✅ Reading table documentation via JSON
+- ✅ SQL generation via Groq API
+- ✅ Natural language processing of questions
 
-### Próximas Fases
+### Next Phases
 
-#### 🔄 **Auto-Descoberta de Schema**
-- O agente conecta diretamente ao banco de dados
-- Lê automaticamente a estrutura das tabelas
-- Identifica relacionamentos e constraints
-- Atualiza a documentação em tempo real
+#### 🔄 **Schema Auto-Discovery**
+- Agent connects directly to the database
+- Automatically reads table structure
+- Identifies relationships and constraints
+- Updates documentation in real-time
 
-#### 🤖 **Execução Automática**
-- Executa as consultas geradas automaticamente
-- Retorna resultados formatados
-- Trata erros e otimiza queries quando necessário
+#### 🤖 **Automatic Execution**
+- Executes generated queries automatically
+- Returns formatted results
+- Handles errors and optimizes queries when necessary
 
-## 🌟 Impacto Esperado
+## 🌟 Expected Impact
 
-Este projeto tem o potencial de:
-- **Democratizar o acesso a dados** para não-técnicos
-- **Acelerar análises** 
-- **Reduzir erros** em consultas SQL
-- **Padronizar** a forma de interagir com bancos de dados
-- **Criar uma ponte** entre linguagem natural e dados estruturados
+This project has the potential to:
+- **Democratize data access** for non-technical users
+- **Accelerate analysis**
+- **Reduce errors** in SQL queries
+- **Standardize** how we interact with databases
+- **Bridge the gap** between natural language and structured data

@@ -4,35 +4,35 @@ from dotenv import load_dotenv
 from langgraph.graph import StateGraph, START, END
 from typing import TypedDict, Dict, Any
 
-# Carrega as variáveis de ambiente do arquivo .env
+# Load environment variables from .env file
 load_dotenv()
 
-# Verifica se a API key está definida
+# Check if API key is defined
 api_key = os.getenv("GROQ_API_KEY")
 if not api_key:
-    raise ValueError("GROQ_API_KEY não encontrada. Verifique se o arquivo .env existe e contém a variável GROQ_API_KEY")
+    raise ValueError("GROQ_API_KEY not found. Check if .env file exists and contains GROQ_API_KEY")
 
-# Verifica se o modelo está definido, senão usa um padrão
+# Check if model is defined, otherwise use default
 model_name = os.getenv("MODEL_NAME", "llama-3.1-8b-instant")
 
-# Inicializa o cliente Groq
+# Initialize Groq client
 cliente = Groq(api_key=api_key)
 
-# Carrega a documentação das tabelas
+# Load table documentation
 try:
     with open("table_documentation.json", "r", encoding="utf-8") as f:
         table_documentation = json.load(f)
 except FileNotFoundError:
-    print("Erro: arquivo table_documentation.json não encontrado")
+    print("Error: table_documentation.json file not found")
     exit(1)
 except json.JSONDecodeError:
-    print("Erro: arquivo table_documentation.json com formato inválido")
+    print("Error: table_documentation.json has invalid format")
     exit(1)
 
-# Pergunta ao usuário
-question = input("Digite sua pergunta sobre os dados: ")
+# Ask user
+question = input("Enter your question about the data: ")
 
-# O estado que será compartilhado entre os agentes 
+# The state that will be shared between agents
 class AgentState(TypedDict):
     question: str
     table_documentation: str
@@ -40,18 +40,18 @@ class AgentState(TypedDict):
     validation_result: str
     
 def generate_sql_query(state: AgentState):
-    print("---Agente de Geração de SQL---")
+    print("---SQL Generation Agent---")
     question = state["question"]
     table_documentation = state["table_documentation"]
 
     message = [
         { 
             "role": "system",
-            "content": "Você é um assistente que gera consultas SQL baseadas no schema de tabelas fornecido. Não invente colunas ou tabelas que não estão no schema."
+            "content": "You are an assistant that generates SQL queries based on the provided table schema. Do not invent columns or tables that are not in the schema."
         },
         {
             "role": "user",
-            "content": f"tabelas disponiveis: {table_documentation} \n\nPergunta:{question}\n\nGere apenas o SQL, sem nenhum outro texto."
+            "content": f"available tables: {table_documentation} \n\nQuestion:{question}\n\nGenerate only the SQL, without any other text."
         }
     ]  
 
@@ -66,27 +66,27 @@ def generate_sql_query(state: AgentState):
             presence_penalty=0,
         )
         sql_query = response.choices[0].message.content.strip()
-        print(f"SQL gerado: {sql_query}")
+        print(f"Generated SQL: {sql_query}")
         return {"sql_query": sql_query}
     except Exception as e:
-        print(f"Erro ao gerar SQL: {e}")
-        return {"sql_query": "Erro na geração"}
+        print(f"Error generating SQL: {e}")
+        return {"sql_query": "Generation Error"}
 
 def validate_sql(state: AgentState):
-    print("\n--- Agente Validador de SQL ---")
+    print("\n--- SQL Validation Agent ---")
     sql_query = state["sql_query"]
     table_documentation = state["table_documentation"]
 
-    if "Erro na geração" in sql_query:
-        print("Validação falhou: Erro na geração do SQL.")
+    if "Generation Error" in sql_query:
+        print("Validation failed: SQL generation error.")
         return {"validation_result": "invalid"}
 
     validation_prompt = (
-        f"Considere o seguinte schema de tabelas: {table_documentation}. "
-        f"A seguinte consulta SQL foi gerada: '{sql_query}'. "
-        "Valide esta consulta. Se ela for válida e utilizar apenas tabelas e colunas que existem no schema e se não existem comandos como 'drop', 'create', 'alter', 'truncate', 'insert', 'update', 'delete', responda 'válido'. "
-        "Se for inválida (ex: sintaxe incorreta, tabela/coluna inexistente, comandos não permitidos), responda 'inválido'. "
-        "Gere apenas a palavra 'válido' ou 'inválido', sem nenhum outro texto."
+        f"Consider the following table schema: {table_documentation}. "
+        f"The following SQL query was generated: '{sql_query}'. "
+        "Validate this query. If it is valid and uses only tables and columns existing in the schema and does not contain commands like 'drop', 'create', 'alter', 'truncate', 'insert', 'update', 'delete', answer 'valid'. "
+        "If it is invalid (e.g., incorrect syntax, non-existent table/column, disallowed commands), answer 'invalid'. "
+        "Generate only the word 'valid' or 'invalid', without any other text."
     )
     
     message = [
@@ -102,25 +102,25 @@ def validate_sql(state: AgentState):
         )
         validation_response = response.choices[0].message.content.strip().lower()
         
-        if "válido" in validation_response:
-            print("Resultado da validação: Válido.")
+        if "valid" in validation_response:
+            print("Validation result: Valid.")
             return {"validation_result": "valid"}
         else:
-            print("Resultado da validação: Inválido.")
+            print("Validation result: Invalid.")
             return {"validation_result": "invalid"}
     except Exception as e:
-        print(f"Erro ao validar SQL: {e}")
+        print(f"Error validating SQL: {e}")
         return {"validation_result": "invalid"}
     
 def should_continue(state: AgentState):
     if state["validation_result"] == "valid":
-        print("\nSQL validado com sucesso. Fim do processo.")
+        print("\nSQL validated successfully. End of process.")
         return {"next": "end"}
     else:
-        print("\nSQL inválido. Tentando gerar novamente...")
+        print("\nInvalid SQL. Trying to generate again...")
         return {"next": "regenerate"}
 
-# Construindo o grafo 
+# Building the graph
 builder = StateGraph(AgentState)
 
 builder.add_node("generate_sql", generate_sql_query)
@@ -131,7 +131,7 @@ builder.add_edge(START, "generate_sql")
 builder.add_edge("generate_sql", "validate_sql")
 builder.add_edge("validate_sql", "should_continue")
 
-# Configurando as condições de saída
+# Configuring exit conditions
 builder.add_conditional_edges(
     "should_continue",
     lambda x: x["next"],
@@ -141,10 +141,10 @@ builder.add_conditional_edges(
     }
 )
 
-# Compilando o grafo
+# Compiling the graph
 graph = builder.compile()
 
-# Executando o grafo
+# Executing the graph
 if __name__ == "__main__":
     initial_state = {
         "question": question,
@@ -154,4 +154,4 @@ if __name__ == "__main__":
     }
     
     result = graph.invoke(initial_state)
-    print(f"\nSQL Final: {result['sql_query']}")
+    print(f"\nFinal SQL: {result['sql_query']}")

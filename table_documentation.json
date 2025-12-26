@@ -2,94 +2,94 @@
     "tables": [
       {
         "table_name": "sales",
-        "description": "Tabela de vendas realizadas pela empresa.",
+        "description": "Table of sales made by the company.",
         "columns": [
           {
             "name": "sale_id",
             "type": "INTEGER",
-            "description": "Identificador único da venda (chave primária)."
+            "description": "Unique identifier of the sale (primary key)."
           },
           {
             "name": "sale_date",
             "type": "DATE",
-            "description": "Data da venda."
+            "description": "Date of the sale."
           },
           {
             "name": "customer_id",
             "type": "INTEGER",
-            "description": "Identificador do cliente que realizou a compra."
+            "description": "Identifier of the customer who made the purchase."
           },
           {
             "name": "product_id",
             "type": "INTEGER",
-            "description": "Identificador do produto vendido."
+            "description": "Identifier of the product sold."
           },
           {
             "name": "quantity",
             "type": "INTEGER",
-            "description": "Quantidade de itens vendidos."
+            "description": "Quantity of items sold."
           },
           {
             "name": "unit_price",
             "type": "DECIMAL(10,2)",
-            "description": "Preço unitário do produto no momento da venda."
+            "description": "Unit price of the product at the time of sale."
           },
           {
             "name": "total_amount",
             "type": "DECIMAL(10,2)",
-            "description": "Valor total da venda (quantity * unit_price)."
+            "description": "Total value of the sale (quantity * unit_price)."
           },
           {
             "name": "region",
             "type": "VARCHAR(50)",
-            "description": "Região onde a venda foi realizada."
+            "description": "Region where the sale was made."
           }
         ]
       },
       {
         "table_name": "customers",
-        "description": "Tabela com informações dos clientes.",
+        "description": "Table with customer information.",
         "columns": [
           {
             "name": "customer_id",
             "type": "INTEGER",
-            "description": "Identificador único do cliente (chave primária)."
+            "description": "Unique identifier of the customer (primary key)."
           },
           {
             "name": "customer_name",
             "type": "VARCHAR(100)",
-            "description": "Nome completo do cliente."
+            "description": "Full name of the customer."
           },
           {
             "name": "customer_email",
             "type": "VARCHAR(100)",
-            "description": "Email do cliente."
+            "description": "Customer email."
           },
           {
             "name": "customer_city",
             "type": "VARCHAR(100)",
-            "description": "Cidade do cliente."
+            "description": "Customer city."
           }
         ]
       },
       {
         "table_name": "products",
-        "description": "Tabela com informações dos produtos.",
+        "description": "Table with product information.",
         "columns": [
           {
             "name": "product_id",
             "type": "INTEGER",
-            "description": "Identificador único do produto (chave primária)."
+            "description": "Unique identifier of the product (primary key)."
           },
           {
             "name": "product_name",
             "type": "VARCHAR(100)",
-            "description": "Nome do produto."
+            "description": "Product name."
           },
           {
             "name": "category",
             "type": "VARCHAR(50)",
-            "description": "Categoria do produto."
+            "description": "Product category."
           }
         ]
       }
